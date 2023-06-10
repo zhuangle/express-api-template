@@ -1,6 +1,7 @@
 # express-api-template
 ## 文档稍后补充
 
+一个使用Express框架构建应用服务器的模板，以MySQL和Sequelize为数据库，包括用户登录和注册等基本功能。
 
 验证码 svg-captcha
 
