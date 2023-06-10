@@ -5,7 +5,6 @@ const { PORT,APIPATH } = require('./config/config.default')
 
 const app = express()
 
-
 // 处理req.body内的数据
 app.use(express.json())
 
