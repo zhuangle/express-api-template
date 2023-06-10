@@ -1,9 +1,0 @@
-node_modules
-
-.env
-.env.develop
-.env.ten
-
-log
-uploads
-
