@@ -26,7 +26,8 @@ exports.register = async (req, res, next) => {
       if(isExistUsercode){
         return res.status(404).json({
           success: false,
-          message:'工号usercode已存在'
+          message: `工号${usercode}已存在`,
+          usercode
         })
       }
       
@@ -37,15 +38,17 @@ exports.register = async (req, res, next) => {
       usercode = usercode ? (usercode * 1 + 1) : 1000
     }
     // 创建用户
-    await User.create({
+    const createUser =  await User.create({
       usercode,
       nickname,
       password: md5(password, HashPrivateKey),
       channel
     });
+    console.log('createUser.uid', createUser.uid);
     res.status(201).json({
       success: true,
-      message: '注册成功'
+      message: '注册成功',
+      uid:createUser.uid
     });
     next();
   } catch (err) {
