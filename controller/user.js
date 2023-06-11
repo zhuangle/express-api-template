@@ -24,7 +24,7 @@ exports.register = async (req, res, next) => {
         where: { usercode},
       })
       if(isExistUsercode){
-        return res.status(404).json({
+        return res.status(409).json({
           success: false,
           message: `工号${usercode}已存在`,
           usercode
@@ -62,13 +62,46 @@ exports.loginByCode =  async (req, res, next) => {
     let user = await User.findOne({
         where: { usercode },
     })
-    //如果查询不到，则说明用户不存在 
     if(!user){
-      return res.status(404).json({
+      return res.status(401).json({
         success: false,
         message:'用户不存在或密码错误'
       })
     }
+    //如果查询不到，则说明用户不存在 
+    const {allowedStart, allowedEnd} = user.dataValues
+    if(user.status == 1){
+      // 直接放行
+    }else if(user.status == 2){
+      // 临时用户，需要校验授权时间
+      const start = new Date(allowedStart).getTime()
+      const end = new Date(allowedEnd).getTime();
+      const currentTimestamp = Date.now(); // 当前时间戳
+      const isStartBeforeNow = start < currentTimestamp;
+      const isEndAfterNow = end > currentTimestamp;
+
+      if (!isStartBeforeNow || !isEndAfterNow) {
+        return res.status(403).json({
+          success: false,
+          message: '账号目前不在可用期',
+          allowedStart,
+          allowedEnd
+        })
+      }
+    }else if(user.status == 9){
+      return res.status(403).json({
+        success: false,
+        message:`当前用户已禁用`,
+        uid: user.uid
+    })        
+    }else{
+      return res.status(403).json({
+        success: false,
+        message:`用户状态未定义，请联系管理员维护`,
+        uid: user.uid
+      })
+    }
+    // token内写入uid
     const tokenData = {
       "uid": user.uid
     }
@@ -86,7 +119,7 @@ exports.loginByCode =  async (req, res, next) => {
         }
       })
     }else{
-      return res.status(404).json({
+      return res.status(401).json({
         success: false,
         message:'用户不存在或密码错误'
       })
@@ -170,7 +203,7 @@ exports.getUserProfile = async (req, res, next) => {
         relativePath = path.join('uploads', bioUri.newFileName).replace(/\\/g, '/');
       }
     }else{
-      return res.status(404).json({
+      return res.status(401).json({
         success: false,
         message: "用户信息不存在",
       });
@@ -293,7 +326,7 @@ exports.updateUserStatus = async (req, res, next) => {
       where: [{ uid }]
     })
     if(!isExistUser){
-      return res.status(404).json({
+      return res.status(401).json({
         success: false,
         message: "要更新的用户不存在",
       });

@@ -52,7 +52,7 @@ module.exports = async (req, res, next) => {
       const isEndAfterNow = end > currentTimestamp;
 
       if (!isStartBeforeNow || !isEndAfterNow) {
-        return res.status(401).json({
+        return res.status(403).json({
           success: false,
           message: '账号目前不在可用期',
           allowedStart,
@@ -60,7 +60,7 @@ module.exports = async (req, res, next) => {
         })
       }
     }else if(user.dataValues.status == 9){
-      return res.status(401).json({
+      return res.status(403).json({
         success: false,
         message: '账号已禁用'
       })
