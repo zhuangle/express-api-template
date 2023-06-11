@@ -304,7 +304,21 @@ exports.updateUserProfile = async (req, res, next) => {
         where:[{uid: req.body.uid}]
       })
     }else{
-      // 不存在用户信息，新增
+      // 不存在用户信息
+      // 校验用户uid是否存在
+      const isExistUid = await User.findOne({
+        where:{uid: req.body.uid}
+      })
+      if(!isExistUid){
+        // 不存在uid
+        console.log('不存在用户uid', isExistUid);
+        return res.status(401).json({
+          success: false,
+          message: "当前要更新的用户信息，用户不存在",
+          uid: req.body.uid
+        });
+      }
+      // 存在则新增
       await UserProfile.create({
         ...req.body
       })
