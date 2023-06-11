@@ -377,12 +377,18 @@ exports.updateUserStatus = async (req, res, next) => {
 // user changePassword 修改密码
 exports.changePassword = async (req, res, next) => {
   try {
-    console.log(req.body);
     const { uid, oldPassword, newPassword } = req.body
     let user = await User.findOne({
       where: { uid },
     })
-    console.log('数据库修改密码',user.password);
+    console.log(user);
+    if(!user){
+      return res.status(401).json({
+        success: false,
+        message:'要修改的用户不存在',
+        uid
+      })
+    }
     const hashedOldPassword = await md5( oldPassword , HashPrivateKey )
     const hashedNewPassword = await md5( newPassword , HashPrivateKey )
     console.log('旧密码：', hashedOldPassword);
@@ -395,12 +401,14 @@ exports.changePassword = async (req, res, next) => {
 
       return res.status(201).send({
         success: true,
-        message: '密码修改成功'
+        message: '密码修改成功',
+        uid
       })
     }else{
       return res.status(400).json({
         success: false,
-        message:'原密码错误'
+        message:'原密码错误',
+        uid
       })
     }
 

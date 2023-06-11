@@ -3,6 +3,8 @@
 
 一个使用Express框架构建应用服务器的模板，以MySQL和Sequelize为数据库，包括用户登录和注册等基本功能。
 
+[接口文档]('https://apifox.com/apidoc/project-2828442')
+
 验证码 svg-captcha
 
 ```powershell
