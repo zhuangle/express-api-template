@@ -224,11 +224,19 @@ exports.getUserProfile = async (req, res, next) => {
 // user getUserList 获取用户列表
 exports.getUserList = async (req, res, next) => {
   // 分页参数,如未指定，则返回第1页，且每页数据为10
-  const page = parseInt(req.query.page) || 1;
-  const pageSize = parseInt(req.query.pageSize) || 10;
+  let pageIndex = parseInt(req.query.pageIndex) || 1;
+  let pageSize = parseInt(req.query.pageSize) || 10;
   try {
+    const totalCount = await User.count({where: []});
+      // 计算实际的页数
+    const totalPages = Math.ceil(totalCount / pageSize);
+      // 如果用户传入的 pageIndex 大于实际的 totalPages，则将 pageIndex 设置为实际的最大页数
+    if (pageIndex > totalPages) {
+      pageIndex = totalPages;
+    }
+
     const { docs, pages, total } = await User.paginate({
-      page,
+      page: pageIndex,
       paginate: pageSize,
       order: [['usercode', 'ASC']],
       attributes: { exclude: ['password'] }
@@ -237,7 +245,7 @@ exports.getUserList = async (req, res, next) => {
       success: true,
       data: {
         users: docs,
-        currentPage: page,
+        currentPage: pageIndex,
         totalPages: pages,
         totalCount: total,
       }
