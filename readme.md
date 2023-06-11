@@ -59,7 +59,7 @@
 
 ​		5.配置config/config.default.js
 
-​	以下是应用的相关配置，下方使用uuid,如7bc30955-76ba-469c-91e8-e4574b7efd8b这种格式的，均为加密私钥，可使用[uuid生成网站]('https://www.uuid.online/')来随机生成不重复的的uuid对数据进行加密。
+​	以下是应用的相关配置，下方使用uuid,如7bc30955-76ba-469c-91e8-e4574b7efd8b这种格式的，均为加密私钥，可使用 [uuid生成网站]('https://www.uuid.online/') 来随机生成不重复的的uuid对数据进行加密。
 
 ```javascript
 // 系统全局配置
