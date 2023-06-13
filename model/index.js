@@ -17,12 +17,11 @@ const sequelize = new Sequelize(MYSQL_DATABASE, MYSQL_USERNAME, MYSQL_PASSWORD, 
 // 导入模型
 const {User, VerificationCode, UserProfile, UserBlackList } = require('./user')(sequelize, Sequelize);
 const { FileUploads } = require('./upload')(sequelize, Sequelize);
+const { Dept } = require('./deparment')(sequelize, Sequelize);
 const init = async () => {
   await sequelize.sync();
 }
 init()
-
-
 
 // 导出初始化方法和模型
 module.exports = {
@@ -31,5 +30,6 @@ module.exports = {
   UserProfile,
   UserBlackList,
   VerificationCode,
-  FileUploads
+  FileUploads,
+  Dept
 };

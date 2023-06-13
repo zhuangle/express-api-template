@@ -6,7 +6,7 @@ const customRules = require('./customRules')
 exports.register = validate([
   body('nickname')
     .notEmpty().withMessage('昵称不能为空')
-    .isLength({min: 3, max: 64}).withMessage('昵称长度应为3-64之间'),
+    .isLength({min: 1, max: 64}).withMessage('昵称长度应为1-64之间'),
   body('usercode')
     .notEmpty().withMessage('工号不能为空')
     .isLength({min: 1, max: 32}).withMessage('工号长度应为1-32位之间'),
