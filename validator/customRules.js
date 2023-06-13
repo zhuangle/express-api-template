@@ -1,3 +1,7 @@
+const { Op } = require("sequelize");
+
+const {User, Dept } = require('../model')
+
 exports.Register_UpdateUserStatus = (value, { req }) => {
   // 当状态为1时为长期用户，不校验授权开始时间和结束时间
   console.log('value', value);
@@ -32,3 +36,11 @@ exports.registerChannel = (value, { req }) => {
   // "网站", "小程序", "PC应用", "移动app"
   return true
 };
+
+exports.deleteDept = async (value, { req }) => {
+  await Dept.findOne({where:{
+    code: {
+      [Op.startsWith]: value
+    }
+  }})
+}

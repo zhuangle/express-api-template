@@ -50,7 +50,6 @@ exports.getDeptList = async (req, res, next) => {
 exports.updateDept = async (req, res, next) => {
   try {
 
-
     
   } catch (err) {
     next(err);
@@ -59,9 +58,12 @@ exports.updateDept = async (req, res, next) => {
 // 删除机构
 exports.deleteDept = async (req, res, next) => {
   try {
-
-
-    
+    console.log('delete',req.body.code);
+    await Dept.delete({where:[{code: req.body.code}]})
+    res.status(204).json({
+      success: true,
+      message: "删除机构成功"
+    })
   } catch (err) {
     next(err);
   }
