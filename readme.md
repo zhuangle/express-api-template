@@ -1,9 +1,21 @@
 # express-api-template
-- ### 介绍
+### 介绍
 
   一个使用Express框架构建应用服务器的模板，以MySQL和Sequelize为数据库，包括用户登录和注册等基本功能。
 
-- ### 部署Buliding
+
+
+### 版本说明
+
+v 0.0.1^(已上线)	   	----  仅包含注册、登录、用户的增删改查、获取校验图形验证码模块
+
+v 0.0.2^(开发中)	   	----  在 v 0.0.1的基础上新增机构deparment模块	
+
+v 0.0.3^(待开发)		   ----   在 v 0.0.2的基础上新增角色、功能、权限管控
+
+
+
+### 部署 Buliding
 
 ​		先决条件：
 
@@ -53,6 +65,8 @@
 
 ​		这是一份.env示例代码，数据库的连接信息需要配置，强烈不建议使用以上配置，按实际配置填入。
 
+
+
 ​		**注意**： 一定要在数据库内创建数据库，与配置MYSQL_DATABASE对应，sequelize在此过程中不会新建数据库
 
 ​	
@@ -96,6 +110,7 @@ module.exports = {
 ​	6.以上配置完成后，使用pm2后台运行express应用
 
 ​		如果还没有安装，可以使用如下命令
+
 ```powershell
     # 安装pm2
     npm i pm2 -g
@@ -117,7 +132,7 @@ module.exports = {
 
 7.第六步中的pm2是在服务端，如果要在本地运行，可直接使用node app.js，pm2的好处是可以后台运行。
 
-​	如果要进行代码的调试，可以使用nodemon来实现应用修改后自动重启
+​	如果要进行代码的调试，推荐使用nodemon来实现应用修改后自动重启
 
 ```powershell
 #安装nodemon
@@ -128,15 +143,70 @@ nodemon app.js
 
 
 
-#### **【注意】在完成部署后，切记保存.env和config下的config.default.js文件，否则将导致数据库内加密数据无法恢复**
-
-
+**【注意】在完成部署后，切记保存.env和config下的config.default.js文件，否则将导致数据库内加密数据无法恢复**
 
 
 
 ---
 
-- ### 应用架构
+
+### 目录结构
+
+  ```
+  
+  ┌ .env   			# 正式环境文件
+  │  .env.example  	# 示例环境文件
+  |  app.js		 	# 入口文件
+  │  readme.md
+  ├─assets 			# 静态资源，这里后期用作readme的图片资源文件夹
+  ├─config  			# 项目内全局配置
+  │      config.default.js
+  │      
+  ├─controller  		# 控制器
+  │      deparment.js
+  │      user.js
+  │      
+  ├─log				# 日志文件夹，存放用户请求接口日志，request.log文件需保留
+  │      .gitkeep
+  │      request.log
+  │      
+  ├─middleware	# 中间件
+  │      auth.js		# 鉴权中间件
+  │      errorHandler.js		# 统一处理问题中间件
+  │      formatLogger.js		# 格式化日志
+  │      uploadFile.js		# 头像上传中间件
+  │      validate.js			# 数据校验中间件
+  │      
+  ├─model		# 数据模型
+  │      baseModel.js		# 公共数据模型
+  │      deparment.js
+  │      index.js
+  │      upload.js
+  │      user.js
+  │          
+  ├─router	# 路由
+  │      department.js
+  │      index.js
+  │      user.js
+  │      
+  ├─uploads	# 用户上传资源
+  ├─util		# 工具
+  │      jugeType.js
+  │      jwt.js
+  │      listToTree.js
+  │      md5.js
+  │      
+  └─validator		# 数据校验
+          customRules.js		# 自定义校验规则
+          department.js
+          user.js
+  ```
+
+  
+
+---
+
+ ### 应用架构
 
   express+ mysql+sequelize+pm2
 
@@ -174,20 +244,31 @@ nodemon app.js
 
 ----
 
-- ### 使用接口
+### 使用接口
 
-  访问接口文档，[接口文档apifox](https://apifox.com/apidoc/project-2828442?nav=1)
+接口采用restfull格式，访问接口文档，[接口文档apifox](https://apifox.com/apidoc/project-2828442?nav=1)
 
-  ---
 
-- ### Q&A
 
-  ---
+---
 
-- ### 联系我
+### Q&A
+
+---
+
+### 联系我
 
   ​	email: coderzhuang@163.com
 
-  ---
 
-- ### 致谢 
+
+---
+
+### 致谢 
+
+
+
+
+
+
+
