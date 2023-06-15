@@ -15,7 +15,7 @@ exports.register = validate([
     .isLength({min: 6, max: 40}).withMessage('密码长度应为6-40之间'),
   body('channel')
     .notEmpty().withMessage('注册途径不能为空')
-    .custom(customRules.registerChannel).withMessage('注册途径传入有误，请传入以下几种方式: "网站", "小程序", "PC应用", "移动app"')
+    .custom(customRules.registerChannel).withMessage('注册途径传入有误，请传入以下几种方式: "网站", "小程序", "PC应用", "移动app"'),
 ])
 // 使用工号登录
 exports.loginByCode = validate([

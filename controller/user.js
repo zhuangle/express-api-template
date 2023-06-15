@@ -11,13 +11,13 @@ const jwt = require('../util/jwt')
 const md5 = require('../util/md5')
 const {Options, CaptchaExpiration,HashPrivateKey, JwtPrivateKey, TokenExpiration, UploadFilePath} = require('../config/config.default')
 
-const { User, VerificationCode, UserProfile, FileUploads } = require('../model')
+const { User, VerificationCode, UserProfile, FileUploads,Dept } = require('../model')
 paginate.paginate(User);
 
 // register 用户注册
 exports.register = async (req, res, next) => {
   try {
-    const { usercode, nickname, password, channel } = req.body;
+    const { usercode, nickname, password, channel,dept } = req.body;
     if(usercode){
       // 用户传入工号
       const isExistUsercode = await User.findOne({
@@ -37,12 +37,26 @@ exports.register = async (req, res, next) => {
       //  如未查到，则默认从1000开始
       usercode = usercode ? (usercode * 1 + 1) : 1000
     }
+    if(dept){
+      const deptid = await Dept.findOne({
+        where: {deptId: dept}
+      })
+      if(!deptid){
+        return res.status(400).json({
+          success: false,
+          message: `机构[deptId: ${dept}]不存在`,
+          usercode
+        })
+      }
+    }
+
     // 创建用户
     const createUser =  await User.create({
       usercode,
       nickname,
       password: md5(password, HashPrivateKey),
-      channel
+      channel,
+      dept
     });
     console.log('createUser.uid', createUser.uid);
     res.status(201).json({
