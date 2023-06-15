@@ -27,6 +27,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: '1'
     },
+    dept: {
+      type: DataTypes.STRING,
+    },
     // 注册途径
     channel: {
       type: DataTypes.ENUM('网站', '小程序', 'PC应用', '移动app'),

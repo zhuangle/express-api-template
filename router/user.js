@@ -24,6 +24,8 @@ router.post('/verifyCaptcha', userValidator.verifyCaptcha ,userCtl.verifyCaptcha
 router.get('/getUserList', auth, userCtl.getUserList)
 // 获取用户信息
 router.get('/getUserProfile', auth, userCtl.getUserProfile)
+// 更新用户机构
+router.put('/updateUserDept', auth, userValidator.updateUserDept, userCtl.updateUserDept)
 // 更新用户信息
 router.put('/updateUserProfile', userValidator.updateUserProfile, auth, userCtl.updateUserProfile)
 // 上传用户头像

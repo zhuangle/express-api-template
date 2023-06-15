@@ -339,6 +339,21 @@ exports.updateUserProfile = async (req, res, next) => {
     next(err)
   }
 }
+// 更新用户机构 updateUserDept
+exports.updateUserDept = async (req, res, next) => {
+  try {
+    const { uid, dept } = req.body
+    await User.update({dept}, {
+      where: {uid}
+    })
+    res.status(201).json({
+      success: true,
+      message: '用户机构更新成功'
+    });
+  } catch (err) {
+    next(err)
+  }
+}
 // user updateUserStatus 更新用户状态
 exports.updateUserStatus = async (req, res, next) => {
   try {

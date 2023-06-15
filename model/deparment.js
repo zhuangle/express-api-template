@@ -30,12 +30,6 @@ module.exports = (sequelize, DataTypes) => {
     managerUid: {
       type: DataTypes.STRING,
     },
-    managerUcode: {
-      type: DataTypes.STRING,
-    },
-    manager: {
-      type: DataTypes.STRING,
-    },
     ...baseModel
   });
 

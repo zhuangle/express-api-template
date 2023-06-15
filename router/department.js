@@ -11,12 +11,12 @@ const router = express.Router()
 
 // 目前机构允许建立四级
 // 新增机构
-router.post('/addDept', auth, deptCtl.addDept)
+router.post('/addDept', auth, deptValidator.addeDept ,deptCtl.addDept)
 // 查询机构列表
 router.get('/getDeptList', auth, deptCtl.getDeptList)
 // 更新机构
-router.put('/updateDept', auth,  deptCtl.updateDept)
+router.put('/updateDept', auth,deptValidator.updateDept, deptCtl.updateDept)
 // 删除机构
-router.delete('/deleteDept', auth, deptCtl.deleteDept)
+router.delete('/deleteDept',deptValidator.deleteDept ,auth, deptCtl.deleteDept)
 
 module.exports = router

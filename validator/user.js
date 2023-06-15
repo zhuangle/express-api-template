@@ -40,6 +40,22 @@ exports.updateUserProfile = validate([
   body('gender')
     .notEmpty().withMessage('性别不能为空'),    
 ])
+// 更新用户机构
+exports.updateUserDept = validate([
+  body('uid')
+    .notEmpty().withMessage('用户uid不能为空')
+    .isUUID().withMessage('用户uid格式不正确'),
+  body('dept')
+    .notEmpty().withMessage('机构deptId不能为空')
+    .isUUID().withMessage('机构deptId格式不正确')  
+    .custom(customRules.updateUserDept)
+],(req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+})
+
 // 更新用户状态
 exports.registerStatus = validate([
   body('uid')
