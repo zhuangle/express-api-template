@@ -1,5 +1,0 @@
-[2023-06-15T00:20:38.373Z] | ::1 | POST /api/user/register | Params: {} | Query: {} | Status: 201 | Response: - |  Gh60F39GE9C6QUKle0gI8WUku4e5xrUZ 
-[2023-06-15T00:30:26.418Z] | ::1 | POST /api/user/register | Params: {} | Query: {} | Status: 201 | Response: - |  EPppYw2Q0d4QP3S1DhHAA73cZyJBpydG 
-[2023-06-15T00:35:52.135Z] | ::1 | POST /api/user/register | Params: {} | Query: {} | Status: 400 | Response: - |  OVAu7mp88N08fGquEfUXwIZa8nTkpoiI 
-[2023-06-15T00:36:57.931Z] | ::1 | POST /api/user/register | Params: {} | Query: {} | Status: 500 | Response: - |  OVAu7mp88N08fGquEfUXwIZa8nTkpoiI 
-[2023-06-15T00:37:38.766Z] | ::1 | POST /api/user/register | Params: {} | Query: {} | Status: 201 | Response: - |  0QhSrMUu2KyU7qsGNUU3p4e3HJS0A4Jp 
