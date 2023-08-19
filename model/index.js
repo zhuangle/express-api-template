@@ -18,6 +18,19 @@ const sequelize = new Sequelize(MYSQL_DATABASE, MYSQL_USERNAME, MYSQL_PASSWORD, 
 const {User, VerificationCode, UserProfile, UserBlackList } = require('./user')(sequelize, Sequelize);
 const { FileUploads } = require('./upload')(sequelize, Sequelize);
 const { Dept } = require('./deparment')(sequelize, Sequelize);
+const {
+  Role,
+  PermMenu,
+  PermBtn,
+  PermRoleRole,
+  PermRolePerm,
+  PermUserRole,
+  PermUserPerm,
+  PermDeptRole,
+  PermDeptPerm,
+  PermMenuRoute
+} = require('./perm')(sequelize, Sequelize);
+
 const init = async () => {
   await sequelize.sync();
 }
@@ -31,5 +44,15 @@ module.exports = {
   UserBlackList,
   VerificationCode,
   FileUploads,
-  Dept
+  Dept,
+  Role,
+  PermMenu,
+  PermBtn,
+  PermRoleRole,
+  PermRolePerm,
+  PermUserRole,
+  PermUserPerm,
+  PermDeptRole,
+  PermDeptPerm,
+  PermMenuRoute
 };

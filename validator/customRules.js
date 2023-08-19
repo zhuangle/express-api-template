@@ -1,6 +1,18 @@
 const { Op, where } = require("sequelize");
 
-const {User, Dept } = require('../model')
+const {
+  User, 
+  Dept, 
+  PermMenu,
+  PermBtn,
+  PermRoleRole,
+  PermRolePerm,
+  PermUserRole,
+  PermUserPerm,
+  PermDeptRole,
+  PermDeptPerm,
+  PermMenuRoute 
+} = require('../model')
 const { convertToTree } = require('../util/listToTree')
 const { getDataType, sortArrByLenth, isEmpty } = require('../util/handlData')
 
@@ -150,6 +162,31 @@ exports.deleteDept = async (value, { req }) => {
 
 
 
+// PermBtn 权限表
+// 检查权限code是否存在
+exports.isBtnCodeExit = async (value, { req }) => {
+  const isBtnCodeExit = await PermBtn.findOne({where:{code: value}})
+  if(isBtnCodeExit){
+    throw new Error(`权限【code: ${value}】已存在`);
+  }
+  return true
+}
+// 删除权限检查
+exports.deletePerm = async(value ,{req,res}) => {
+// 检测当前字段是否与其他表存在关联
+const tab = [
+    { tab: PermRolePerm, field: 'permId' },
+    { tab: PermDeptPerm, field: 'permId' },
+    { tab: PermUserPerm, field: 'permId'  }
+  ];
+  const result =await isIdinOtherTab(value, tab)
+  if(result.length){
+    throw new Error(`权限[${value}]在其他表内已存在对应关系，请先处理`);
+  }
+  return true
+}
+
+
 // 检查更新传入的对象内,除了DeptId以外是否存在其他字段
 function checkIfOtherValuesExist(obj) {
   for (let key in obj) {
@@ -170,3 +207,25 @@ function filterEmptyValues(obj) {
   }
   return filteredObj;
 }
+
+// 检查字段与其他表的关联
+async function isIdinOtherTab(value, tab) {
+  const results = await Promise.all(tab.map(async ({ tab: Table, field }) => {
+    const query = {
+      where: { [field]: value }
+    };
+    const result = await Table.findOne(query);
+
+    if (result) {
+      return { tab: Table, value: result };
+    }
+
+  }));
+
+  const validResults = results.filter(result => result); // 过滤掉空结果
+
+  return validResults;
+}
+
+
+

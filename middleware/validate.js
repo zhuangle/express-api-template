@@ -8,10 +8,11 @@ module.exports = (validations) => {
     if (errors.isEmpty()) {
       return next();
     }
-    res.status(400).json({
+    const result = {
       success: false,
       message: errors.array()[0].msg,
-      error: errors.array()
-    });
+      error: errors.array(),
+    }
+    res.status(400).json(result);
   };
 };

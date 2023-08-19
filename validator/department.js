@@ -5,7 +5,7 @@ const customRules = require('./customRules')
 
 // 新增机构数据校验 
 exports.addeDept = validate([
-  body('code')
+  body('btnId')
     .notEmpty().withMessage('机构编码不能为空')
     .isLength({min: 2, max: 8}).withMessage('机构编码应为2-8位的数字'),
   body('name')
@@ -19,12 +19,7 @@ exports.addeDept = validate([
   body('managerUid')
     .notEmpty().withMessage('管理managerUid不能为空')
     .isUUID().withMessage('管理managerUid格式不正确')
-], (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-})
+])
 
 // 更新机构数据校验 
 exports.updateDept = validate([
@@ -32,21 +27,10 @@ exports.updateDept = validate([
     .notEmpty().withMessage('机构id不能为空')
     .isUUID().withMessage(`机构id格式不正确`)
     .custom(customRules.updateDept)
-], (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-})
+])
 
 exports.deleteDept = validate([
-  body('code')
-    .notEmpty().withMessage('机构编码不能为空')
-    .isLength({min: 2, max: 8}).withMessage('机构编码应为2-8位的数字')
-    .custom(customRules.deleteDept)
-], (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-})
+  body('btnId')
+    .notEmpty().withMessage('权限编码不能为空')
+    .custom(customRules.deletePerm)
+])
