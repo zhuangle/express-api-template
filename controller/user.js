@@ -200,7 +200,7 @@ exports.verifyCaptcha = async (req, res, next) => {
 }
 // user getUserProfile 获取用户详情
 exports.getUserProfile = async (req, res, next) => {
-  const uid = req.uid
+  const uid = req.query.uid
   try {
     const Profile = await UserProfile.findOne({
       where: [{uid}]
@@ -208,7 +208,7 @@ exports.getUserProfile = async (req, res, next) => {
     const profile = Profile ? Profile.dataValues : {}
     // 获取用户头像
     const bioUri = await FileUploads.findOne({
-      where:[{uid: req.query.uid}]
+      where:[{uid}]
     });
     // 头像地址
     let relativePath = ''

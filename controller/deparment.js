@@ -38,13 +38,13 @@ exports.addDept = async (req, res, next) => {
       where: {uid: managerUid}
     })
     if(!manager){
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         message: `管理者[managerUid:${managerUid}]不存在`
       })
     }
     await Dept.create(req.body)
-    res.status(201).json({
+     return res.status(201).json({
       success: true,
       message: "机构创建成功",
       data: req.body

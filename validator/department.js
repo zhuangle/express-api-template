@@ -5,7 +5,7 @@ const customRules = require('./customRules')
 
 // 新增机构数据校验 
 exports.addeDept = validate([
-  body('btnId')
+  body('code')
     .notEmpty().withMessage('机构编码不能为空')
     .isLength({min: 2, max: 8}).withMessage('机构编码应为2-8位的数字'),
   body('name')
