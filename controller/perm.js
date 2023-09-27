@@ -40,35 +40,37 @@ exports.createRole = async (req, res, next) => {
 // getDeptList 查询角色列表
 exports.getRoleLists = async (req, res, next) => {
   try {
-    const { name = "", roleId = "" } = req.query;
-    console.log("name,roleId", name, roleId);
+    const { name, roleId, status } = req.query;
     let query = {};
+    // 按角色名查询
     if (name) {
-      query = { ...{ name } };
+      query.name = name;
     }
+
+    // 按角色roleId查询角色
     if (roleId) {
-      query = { ...{ roleId } };
+      query.roleId = roleId;
     }
+    // 按状态查询角色， 0无效， 1有效
+    if (status) {
+      query.status = status;
+    }
+
+    // 使用查询对象来查询数据库
+    const roleList = await Role.findAll({
+      where: query,
+    });
     console.log("query", query);
     res.status(200).json({
       success: true,
       message: "获取角色列表成功",
+      data: roleList,
     });
   } catch (err) {
     next(err);
   }
 };
-// getRoleProfile 获取单个角色
-exports.getRoleProfile = async (req, res, next) => {
-  try {
-    res.status(200).json({
-      success: true,
-      message: "获取角色列表成功",
-    });
-  } catch (err) {
-    next(err);
-  }
-};
+
 // 更新角色
 exports.updateRole = async (req, res, next) => {
   try {

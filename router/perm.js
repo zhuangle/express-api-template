@@ -13,8 +13,6 @@ const router = express.Router();
 router.post("/createRole", auth, permValidator.createRole, permtCtl.createRole);
 // 查询角色列表
 router.get("/getRoleLists", auth, permtCtl.getRoleLists);
-// 获取单个角色
-router.get("/getRoleProfile", auth, permtCtl.getRoleProfile);
 // 更新角色
 router.put("/updateRole", auth, permtCtl.updateRole);
 // 删除角色
