@@ -1,5 +1,5 @@
 const validate = require("../middleware/validate");
-const { body, validationResult } = require("express-validator");
+const { query, body, validationResult } = require("express-validator");
 const customRules = require("./customRules");
 
 // 角色
@@ -24,19 +24,9 @@ exports.createPerm = validate([
 
 // 更新权限数据校验
 exports.updatePerm = validate([
-  body("btnId")
-    .notEmpty()
-    .withMessage("权限id不能为空")
-    .isUUID()
-    .withMessage(`权限id格式不正确`)
-    .custom(customRules.updatePerm),
+  body("roleId").notEmpty().withMessage("权限id不能为空"),
 ]);
 
 exports.deletePerm = validate([
-  body("btnId")
-    .notEmpty()
-    .withMessage("权限编码permId不能为空")
-    .isUUID()
-    .withMessage("权限编码permId格式不正确")
-    .custom(customRules.deletePerm),
+  query("roleId").notEmpty().withMessage("权限编码permId不能为空"),
 ]);

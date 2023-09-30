@@ -24,8 +24,8 @@ router.post("/createPerm", auth, permValidator.createPerm, permtCtl.createPerm);
 // // 查询权限列表
 router.get("/getPermLists", auth, permtCtl.getPermLists);
 // // 更新权限
-router.put("/updatePerm", auth, permtCtl.updatePerm);
+router.put("/updatePerm", auth, permValidator.updatePerm,  permtCtl.updatePerm);
 // // 删除权限
-router.delete("/deletePerm", auth, permtCtl.deletePerm);
+router.delete("/deletePerm", auth, permValidator.updatePerm, permtCtl.deletePerm);
 
 module.exports = router;

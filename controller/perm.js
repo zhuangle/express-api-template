@@ -74,9 +74,27 @@ exports.getRoleLists = async (req, res, next) => {
 // 更新角色
 exports.updateRole = async (req, res, next) => {
   try {
+    const {roleId, name} = req.body
+    const isExistRoleId = await Role.findOne({where: {roleId}})
+    if(!isExistRoleId){
+      return res.status(401).json({
+        success: true,
+        message: `roleId[${roleId}]不存在`,
+      });
+    }
+    if(name){
+      const isExistRoleName = await Role.findOne({where: {name}})
+      if(isExistRoleName){
+        return res.status(401).json({
+          success: true,
+          message: `角色名称[${name}]已存在`,
+        });
+      }
+    }
+    await Role.update(req.body,{where: {roleId}})
     res.status(201).json({
       success: true,
-      message: "机构更新成功",
+      message: "角色更新成功",
     });
   } catch (err) {
     next(err);
@@ -85,6 +103,8 @@ exports.updateRole = async (req, res, next) => {
 // 删除角色
 exports.deleteRole = async (req, res, next) => {
   try {
+    const {roleId} = req.query
+    await Role.destroy({where:{roleId}})
     res.status(200).json({
       success: true,
       message: "删除机构成功",

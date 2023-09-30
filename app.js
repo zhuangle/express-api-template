@@ -18,8 +18,7 @@ const { SecretKey } = require("./config/config.default");
 
 const app = express();
 
-// 格式化日志中间件
-app.use(requestLogger);
+
 app.use(cors());
 // 处理req.body内的数据
 app.use(express.json());
@@ -34,6 +33,8 @@ app.use(
 );
 
 const port = process.env.PORT || 3000;
+// 格式化日志中间件
+app.use(requestLogger);
 
 // 路由
 app.use("/api", router);
